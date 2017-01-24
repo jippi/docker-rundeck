@@ -1,0 +1,30 @@
+#!/bin/bash
+
+. /etc/rundeck/profile
+
+set -o monitor
+
+log() {
+  echo "[$(date '+%d-%b-%Y %H:%M:%S')] $*"
+}
+
+log ""
+log "-> Rundeck"
+log ""
+
+gosu rundeck:rundeck $rundeckd 1>&1 2>&2 &
+pid=$!
+
+log "Rundeck is running with pid $pid"
+
+sig_kill_handler() {
+  log "Killing Rundeck with PID $pid"
+  kill -TERM $pid
+}
+trap sig_kill_handler QUIT INT TERM USR2 HUP
+
+while kill -0 "$pid" > /dev/null 2>&1;
+do
+  log "Waiting for PID $pid to finish up ..."
+  wait $pid
+done
