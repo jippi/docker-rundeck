@@ -9,7 +9,14 @@ log() {
 }
 
 log ""
-log "-> Rundeck"
+log "-> Copying Rundeck contrib plugins"
+log ""
+
+cp -r /var/lib/rundeck/contrib-plugins/* /var/lib/rundeck/libext/
+chown -R rundeck:rundeck /var/lib/rundeck/libext/
+
+log ""
+log "-> Starting Rundeck"
 log ""
 
 gosu rundeck:rundeck $rundeckd 1>&1 2>&2 &

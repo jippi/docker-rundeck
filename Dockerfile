@@ -17,11 +17,13 @@ RUN set -ex \
 
     && wget -q http://dl.bintray.com/rundeck/rundeck-deb/rundeck-${RUNDECK_VERSION}-GA.deb \
     && dpkg -i rundeck-${RUNDECK_VERSION}-GA.deb \
-    && rm rundeck-${RUNDECK_VERSION}-GA.deb
+    && rm rundeck-${RUNDECK_VERSION}-GA.deb \
+
+    && mkdir -p /var/lib/rundeck/contrib-plugins/
 
 COPY ["bin/rundeck-boot", "/usr/local/bin"]
 
-VOLUME ["/var/lib/rundeck/logs", "/etc/rundeck", "/var/rundeck/projects", "/var/log/rundeck/"]
+VOLUME ["/var/lib/rundeck/logs", "/etc/rundeck", "/var/rundeck/projects", "/var/log/rundeck/", "/var/lib/rundeck/contrib-plugins"]
 
 CMD "rundeck-boot"
 
