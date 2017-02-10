@@ -1,9 +1,9 @@
 build:
-	docker build -t quay.io/bownty/rundeck .
+	docker build -t registry.bownty.net/bownty/rundeck .
 
 run-bash:
 	docker run -it \
 	--name rundeck_example \
 	--rm \
-	quay.io/bownty/rundeck \
+	registry.bownty.net/bownty/rundeck \
 	bash
